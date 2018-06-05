@@ -7,6 +7,8 @@ import styled from 'styled-components'
 
 import TasksPage from './components/TasksPage'
 
+import FlashMessage from './components/FlashMessage'
+
 import { createTask, editTask, fetchTasks } from './actions/index'
 
 class App extends Component {
@@ -18,27 +20,37 @@ class App extends Component {
     this.props.dispatch(editTask(id, { status }))
   }
 
+  componentDidMount() {
+    console.log('inside component did mount .....')
+    this.props.dispatch(fetchTasks());
+  }
+
   render() {
     return (
-      <div className="App">
-        <TasksPage
-          tasks={this.props.tasks}
-          onCreateTask={this.onCreateTask}
-          onStatusChange={this.onStatusChange}
-        />
+      <div>
+        {this.props.error && <FlashMessage message={this.props.error} />}
+        <div className="App">
+          <TasksPage
+            tasks={this.props.tasks}
+            onCreateTask={this.onCreateTask}
+            onStatusChange={this.onStatusChange}
+            isLoading={this.props.isLoading}
+          />
+        </div>
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
+  const { tasks, isLoading, error } = state.tasks;
   return {
-    tasks: state.tasks
+    tasks,
+    isLoading,
+    error
   }
 }
 
-function mapDispatchToProps(dispatch){
-  fetchTasks: dispatch(fetchTasks)
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+export default connect(mapStateToProps)(App);

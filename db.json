@@ -1,26 +1,40 @@
 {
-    "tasks":[
-        {
-            "id":1,
-            "title": "Learn Redux",
-            "description": "The store, actions and reducers oh my ",
-            "status": "unstarted"
-        },
-        {
-            "id": 2,
-            "title":"Peace on Earth",
-            "description":"No big deal",
-            "status": "unstarted"    
-        },
-        {
-            "id":3,
-            "title":"Create Facebook for dogs",
-            "description":"The hottest new social networkd",
-            "status": "Completed"
-        }
-
-
-
-
-    ]
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Learn Redux",
+      "description": "The store, actions and reducers oh my ",
+      "status": "unstarted"
+    },
+    {
+      "id": 2,
+      "title": "Peace on Earth",
+      "description": "No big deal",
+      "status": "completed"
+    },
+    {
+      "id": 3,
+      "title": "Create Facebook for dogs",
+      "description": "The hottest new social networkd",
+      "status": "in-progress"
+    },
+    {
+      "title": "ererer",
+      "description": "cdfdfdf",
+      "status": "unstarted",
+      "id": 4
+    },
+    {
+      "title": "grgrgrg",
+      "description": "jkjkjk",
+      "status": "unstarted",
+      "id": 5
+    },
+    {
+      "title": "Travel to Poland ",
+      "description": "looking for a ticket",
+      "status": "completed",
+      "id": 6
+    }
+  ]
 }

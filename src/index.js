@@ -12,11 +12,22 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import thunk from 'redux-thunk'
 
+import logger from './middleware/logger'
+
+import tasksReducer from './reducers'
+
+const rootReducer = (state = {}, action) => {
+    console.log('what is state....., root reducer',state);
+    return {
+        tasks: tasksReducer(state.tasks, action)
+    }
+}
+
 
 
 const store = createStore(
-    tasks,
-    composeWithDevTools(applyMiddleware(thunk))
+    rootReducer,
+    composeWithDevTools(applyMiddleware(thunk, logger))
 );
 
 ReactDOM.render(
