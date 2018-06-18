@@ -1,8 +1,7 @@
 import React from 'react'
-
 import Task from './Task'
 import TaskList from './TaskList'
-
+import { ConfirmModal } from './ConfirmModal'
 import styled from 'styled-components'
 
 let ListsContainer = styled.div`
@@ -18,7 +17,13 @@ let TasksListHeader = styled.h2`
 `;
 
 let SubHeader = styled.div`
-
+    display: flex;
+    justify-content: center;
+      input {
+          margin-left: 30px;
+          padding: 5px;
+          border-radius: 3px;
+      }
 `;
 
 let FormWrapper = styled.div`
@@ -30,7 +35,6 @@ let FormWrapper = styled.div`
     justify-content: center;
         form {
             max-width: 80%;
-
         }
         input {
             margin-right: 10px;
@@ -41,13 +45,9 @@ let FormWrapper = styled.div`
 
 const TASK_STATUSES = ['unstarted', 'in-progress', 'completed'];
 
-
-//let result = TASK_STATUSES.map(status => list.filter(item => item.status === status))
-
 class TasksPage extends React.Component {
 
     constructor(props) {
-        console.log('task page props', props);
         super(props);
         this.state = {
             showNewCardForm: false,
@@ -58,18 +58,22 @@ class TasksPage extends React.Component {
     }
 
     renderTaskLists() {
-        const { tasks } = this.props;
-        return TASK_STATUSES.map(status => {
-            const filteredTasks = tasks.filter(item => item.status === status);
-            return <TaskList key={status} tasks={filteredTasks} status={status} onStatusChange={this.props.onStatusChange} />
-        }
-        )
+        const { tasks, onStatusChange } = this.props;
+        return Object.keys(tasks).map(status => {
+            const taskByStatus = tasks[status];
+            return (
+                <TaskList
+                    key={status}
+                    status={status}
+                    tasks={taskByStatus}
+                    onStatusChange={onStatusChange}
+                />
+            )
+        });
     }
 
     onCreateTask = (e) => {
         e.preventDefault();
-        console.log('this state title', this.state.title);
-        console.log('this state descriptiopn', this.state.description)
         this.props.onCreateTask({
             title: this.state.title,
             description: this.state.description
@@ -97,11 +101,14 @@ class TasksPage extends React.Component {
         })
     }
 
+    onSearch = (e) => {
+        this.props.onSearch(e.target.value);
+    }
+
     toggleForm() {
         this.setState({
             showNewCardForm: !this.state.showNewCardForm
         })
-        console.log('showNewCardForm ', this.state)
     }
 
     render() {
@@ -114,7 +121,7 @@ class TasksPage extends React.Component {
                 <div>
                     <TasksListHeader>Tasks List </TasksListHeader>
                     <SubHeader>
-                        <button onClick={this.toggleForm}>Add Task</button>
+                        <button onClick={this.toggleForm}>Add Task</button> <input onChange={this.onSearch} type="text" placeholder="Search..." />
                     </SubHeader>
                     {this.state.showNewCardForm && (
                         <FormWrapper>
@@ -139,8 +146,6 @@ class TasksPage extends React.Component {
                                 >
                                     Save Task
                             </button>
-
-
                             </form>
                         </FormWrapper>
                     )}

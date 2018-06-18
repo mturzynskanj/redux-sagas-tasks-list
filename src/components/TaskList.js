@@ -17,11 +17,11 @@ let Status = styled.div`
 `;
 
 const TaskList = props => {
-    console.log('TaskLIst ', props);
+    console.log('TaskLIst ', props.dispatch);
     return (
         <TaskListWrapper>
             <Status>{props.status}</Status>
-            {props.tasks.map(task => <Task key={task.id} task={task} onStatusChange={props.onStatusChange} />)}
+            {props.tasks.map(task => <Task key={task.id} task={task} onStatusChange={props.onStatusChange}  />)}
         </TaskListWrapper>
     )
 }

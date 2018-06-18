@@ -9,48 +9,73 @@ import TasksPage from './components/TasksPage'
 
 import FlashMessage from './components/FlashMessage'
 
-import { createTask, editTask, fetchTasks } from './actions/index'
+import { ConfirmModal } from './components/ConfirmModal'
+
+import { getGroupedAndFilteredTasks } from './reducers'
+
+import { createTask, editTask, fetchTasksStarted, showModal, canceledModal, filterTasks } from './actions/index'
 
 class App extends Component {
-  onCreateTask = (title, description) => {
-    this.props.dispatch(createTask(title, description))
-  }
+	onCreateTask = (title, description) => {
+		this.props.dispatch(createTask(title, description))
+	}
 
-  onStatusChange = (id, status) => {
-    this.props.dispatch(editTask(id, { status }))
-  }
+	onSearch = searchTerm => {
+		this.props.dispatch(filterTasks(searchTerm));
+	}
 
-  componentDidMount() {
-    console.log('inside component did mount .....')
-    this.props.dispatch(fetchTasks());
-  }
+	onStatusChange = (id, status) => {
+		this.props.dispatch(editTask(id, { status }))
+	}
 
-  render() {
-    return (
-      <div>
-        {this.props.error && <FlashMessage message={this.props.error} />}
-        <div className="App">
-          <TasksPage
-            tasks={this.props.tasks}
-            onCreateTask={this.onCreateTask}
-            onStatusChange={this.onStatusChange}
-            isLoading={this.props.isLoading}
-          />
-        </div>
-      </div>
-    );
-  }
+	showModal = (id) => {
+		this.props.dispatch({ type: 'DELETE_CONFIRMATION', payload: { task: id, show: true } });
+	}
+
+	hideConfirm = () => {
+		this.props.dispatch(canceledModal({ show: false, task: null }))
+	}
+
+	onContinue = () => {
+		this.props.dispatch({
+			type: 'CONFIRMED',
+			payload: {
+				task: this.props.showModal.task
+			}
+		})
+	}
+
+	componentDidMount() {
+		this.props.dispatch(fetchTasksStarted());
+	}
+
+	render() {
+		return (
+			<div>
+				{this.props.error && <FlashMessage message={this.props.error} />}
+				<div className="App">
+					{/* {this.props.showModal.show && <ConfirmModal onCancel={this.hideConfirm} onContinue={this.onContinue} />} */}
+					<TasksPage
+						tasks={this.props.tasks}
+						onCreateTask={this.onCreateTask}
+						onStatusChange={this.onStatusChange}
+						isLoading={this.props.isLoading}
+						onSearch={this.onSearch}
+					//showModal={this.props.dispatch({type:'DELETE_CONFIRMATION'})}
+					/>
+				</div>
+			</div>
+		);
+	}
 }
 
 function mapStateToProps(state) {
-  const { tasks, isLoading, error } = state.tasks;
-  return {
-    tasks,
-    isLoading,
-    error
-  }
+	const { isLoading, error, showModal } = state.tasks;
+	return {
+		tasks : getGroupedAndFilteredTasks(state),
+		isLoading,
+		error
+	}
 }
-
-
 
 export default connect(mapStateToProps)(App);

@@ -4,37 +4,71 @@
       "id": 1,
       "title": "Learn Redux",
       "description": "The store, actions and reducers oh my ",
-      "status": "unstarted"
+      "status": "in-progress",
+      "timer": 349
     },
     {
       "id": 2,
       "title": "Peace on Earth",
       "description": "No big deal",
-      "status": "completed"
+      "status": "unstarted",
+      "timer": 2
     },
     {
       "id": 3,
       "title": "Create Facebook for dogs",
       "description": "The hottest new social networkd",
-      "status": "in-progress"
+      "status": "unstarted",
+      "timer": 6
     },
     {
-      "title": "ererer",
-      "description": "cdfdfdf",
+      "title": "Marathon Training",
+      "description": "Let target for 4 hours score",
       "status": "unstarted",
-      "id": 4
+      "id": 4,
+      "timer": 374
     },
     {
-      "title": "grgrgrg",
-      "description": "jkjkjk",
-      "status": "unstarted",
-      "id": 5
+      "title": "Master RxJs",
+      "description": "Declarative approach to programming",
+      "status": "completed",
+      "id": 5,
+      "timer": 40
     },
     {
       "title": "Travel to Poland ",
       "description": "looking for a ticket",
       "status": "completed",
-      "id": 6
+      "id": 6,
+      "timer": 39
+    },
+    {
+      "title": "Learn Sagas",
+      "description": "hard as hell",
+      "status": "completed",
+      "id": 7,
+      "timer": 8
+    },
+    {
+      "title": "Learn to Dance ",
+      "description": "to Old or not",
+      "status": "unstarted",
+      "id": 8,
+      "timer": 7
+    },
+    {
+      "title": "learn cooking ",
+      "description": "test....",
+      "status": "completed",
+      "timer": 17,
+      "id": 9
+    },
+    {
+      "title": "what the hell",
+      "description": "why nobody hires me",
+      "status": "unstarted",
+      "timer": 14,
+      "id": 10
     }
   ]
 }

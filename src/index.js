@@ -5,6 +5,7 @@ import App from './App';
 import tasks from './reducers'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
+import createSagaMiddleware from 'redux-saga'
 import { devToolsEnhancer } from 'redux-devtools-extension'
 import registerServiceWorker from './registerServiceWorker';
 
@@ -14,21 +15,20 @@ import thunk from 'redux-thunk'
 
 import logger from './middleware/logger'
 
-import tasksReducer from './reducers'
+import confirmModal from './reducers/confirmModal'
 
-const rootReducer = (state = {}, action) => {
-    console.log('what is state....., root reducer',state);
-    return {
-        tasks: tasksReducer(state.tasks, action)
-    }
-}
+import { rootReducer } from './reducers'
 
+import { rootSaga } from './sagas'
 
+const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(
     rootReducer,
-    composeWithDevTools(applyMiddleware(thunk, logger))
+    composeWithDevTools(applyMiddleware(thunk, sagaMiddleware, logger))
 );
+
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
     <Provider store={store}>
